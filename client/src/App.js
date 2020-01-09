@@ -4,6 +4,10 @@ import logo from './logo.svg';
 import './App.css';
 import Period from './components/Period';
 import AddButton from './components/AddButton';
+import Character from './components/Character';
+import Events from './components/Events';
+import Event from './components/Event';
+import { CharacterData, EventData } from './data/data';
 
 const useStyles = makeStyles({
     container: {
@@ -23,9 +27,65 @@ const useStyles = makeStyles({
     },
 });
 
+const characters = [
+    new CharacterData(0, 'Marie', 'Anna', 'Schichlgruber', null),
+    new CharacterData(1, 'Johann', 'Georg', 'Hiedler', null),
+    new CharacterData(2, 'Johann', 'Nepomuk', 'Huttler', null),
+    new CharacterData(2, 'Alios', null, 'Schichlgruber', '/images/Alois_Hitler.jpg'),
+];
+
+const events = [
+    new EventData(
+        1837,
+        5,
+        17,
+        null,
+        null,
+        'Alios Schichlgruber born out of wedlock to Marie Schichlgruber',
+        [0, 3]
+    ),
+    new EventData(
+        1855,
+        null,
+        null,
+        null,
+        null,
+        'Alios gives up trade job to join financial administration of the Austrian monarchy',
+        [3]
+    ),
+    new EventData(
+        1875,
+        null,
+        null,
+        null,
+        null,
+        'Alios becomes custom official in town of Braunav',
+        [2]
+    ),
+    new EventData(
+        1876,
+        null,
+        null,
+        null,
+        null,
+        'Johann Nepomuk & 3 witnesses declare Alios as biological son of Johann Georg',
+        [2, 3]
+    ),
+    new EventData(
+        1876,
+        null,
+        null,
+        null,
+        null,
+        "Pastor changes Alios's record to list Georg as father, removes illegitimate birth status",
+        [1, 3]
+    ),
+];
+
 function App() {
     const classes = useStyles();
     const [periods, setPeriods] = useState([0]);
+    const [view, setView] = useState('Events');
 
     function addPeriod() {
         const per = periods.slice();
@@ -37,8 +97,22 @@ function App() {
         <div className={classes.container}>
             <header className={classes.header}>
                 <h1>Character Map</h1>
-                <ViewType />
+                <ViewType view={view} setView={setView} />
             </header>
+            {view === 'Characters' ? (
+                <Period>
+                    {characters.map(char => (
+                        <Character character={char} />
+                    ))}
+                </Period>
+            ) : null}
+            {view === 'Events' ? (
+                <Events>
+                    {events.map(event => (
+                        <Event event={event} />
+                    ))}
+                </Events>
+            ) : null}
             {periods.map(el => (
                 <Period />
             ))}
@@ -64,12 +138,14 @@ const viewUseStyles = makeStyles({
     },
 });
 
-function ViewType() {
+function ViewType({ setView }) {
     const classes = viewUseStyles();
     return (
         <div className={classes.viewType}>
-            <label>Relationships</label>
-            <label>Groups</label>
+            <label onClick={() => setView('Characters')}>Characters</label>
+            <label onClick={() => setView('Relationships')}>Relationships</label>
+            <label onClick={() => setView('Groups')}>Groups</label>
+            <label onClick={() => setView('Events')}>Events</label>
         </div>
     );
 }
