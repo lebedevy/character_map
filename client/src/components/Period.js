@@ -8,6 +8,7 @@ import { CharacterData } from '../data/data';
 const useStyles = makeStyles({
     container: {
         display: 'flex',
+        flexWrap: 'wrap',
         justifyContent: 'center',
         alignItems: 'center',
         // height: '250px',

@@ -19,14 +19,22 @@ const useStyles = makeStyles({
 
 export default function Event({ event }) {
     const classes = useStyles();
+    const date = event.date;
+
     return (
         <div className={classes.container}>
-            <div>
-                <label>{`${event.year} `}</label>
-                <label>{`${event.month !== null ? getMonth(event.month) : ''} `}</label>
-                <label>{`${event.day != null ? event.day : ''}`}</label>
-            </div>
+            {date ? <EventDate date={date} /> : null}
             <p>{event.description}</p>
+        </div>
+    );
+}
+
+function EventDate({ date }) {
+    return (
+        <div>
+            <label>{`${date.year} `}</label>
+            <label>{`${date.month != null ? getMonth(date.month) : ''} `}</label>
+            <label>{`${date.day != null ? date.day : ''}`}</label>
         </div>
     );
 }

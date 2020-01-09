@@ -8,13 +8,20 @@ export class CharacterData {
     }
 }
 
-export class EventData {
-    constructor(year, month, day, hours, minutes, description, characters) {
+export class EventDate {
+    constructor(year, month, day, hours, minutes) {
         this.year = year;
         this.month = month;
         this.day = day;
         this.hours = hours;
         this.minutes = minutes;
+    }
+}
+
+export class EventData {
+    constructor(id, date, description, characters) {
+        this.id = id;
+        this.date = date;
         this.description = description;
         this.characters = characters;
     }

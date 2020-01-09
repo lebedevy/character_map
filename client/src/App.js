@@ -7,7 +7,7 @@ import AddButton from './components/AddButton';
 import Character from './components/Character';
 import Events from './components/Events';
 import Event from './components/Event';
-import { CharacterData, EventData } from './data/data';
+import { CharacterData, EventData, EventDate } from './data/data';
 
 const useStyles = makeStyles({
     container: {
@@ -31,55 +31,41 @@ const characters = [
     new CharacterData(0, 'Marie', 'Anna', 'Schichlgruber', null),
     new CharacterData(1, 'Johann', 'Georg', 'Hiedler', null),
     new CharacterData(2, 'Johann', 'Nepomuk', 'Huttler', null),
-    new CharacterData(2, 'Alios', null, 'Schichlgruber', '/images/Alois_Hitler.jpg'),
+    new CharacterData(3, 'Alios', null, 'Schichlgruber', '/images/Alois_Hitler.jpg'),
+    new CharacterData(4, 'Anna', null, 'Glasl'),
+    new CharacterData(5, 'Franziska', null, 'Matzelsberges'),
 ];
 
 const events = [
     new EventData(
-        1837,
-        5,
-        17,
-        null,
-        null,
+        0,
+        new EventDate(1837, 5, 17),
         'Alios Schichlgruber born out of wedlock to Marie Schichlgruber',
         [0, 3]
     ),
     new EventData(
-        1855,
-        null,
-        null,
-        null,
-        null,
+        1,
+        new EventDate(1855),
         'Alios gives up trade job to join financial administration of the Austrian monarchy',
         [3]
     ),
+    new EventData(2, new EventDate(1875), 'Alios becomes customs official in town of Braunav', [3]),
     new EventData(
-        1875,
-        null,
-        null,
-        null,
-        null,
-        'Alios becomes custom official in town of Braunav',
-        [2]
-    ),
-    new EventData(
-        1876,
-        null,
-        null,
-        null,
-        null,
+        3,
+        new EventDate(1876),
         'Johann Nepomuk & 3 witnesses declare Alios as biological son of Johann Georg',
         [2, 3]
     ),
     new EventData(
-        1876,
-        null,
-        null,
-        null,
-        null,
+        4,
+        new EventDate(1876),
         "Pastor changes Alios's record to list Georg as father, removes illegitimate birth status",
         [1, 3]
     ),
+    new EventData(5, new EventDate(1873), 'Alios marries Anna Glasl, his first marriage', [3, 4]),
+    new EventData(6, new EventDate(1883), 'Alios marries Franziska Matzelsberges', [3, 5]),
+    new EventData(7, new EventDate(1882), 'Anna dies', [3]),
+    new EventData(8, new EventDate(1880), 'Alios divorces Anna', [3, 4]),
 ];
 
 function App() {
@@ -106,13 +92,7 @@ function App() {
                     ))}
                 </Period>
             ) : null}
-            {view === 'Events' ? (
-                <Events>
-                    {events.map(event => (
-                        <Event event={event} />
-                    ))}
-                </Events>
-            ) : null}
+            {view === 'Events' ? <Events events={events} /> : null}
             {periods.map(el => (
                 <Period />
             ))}
