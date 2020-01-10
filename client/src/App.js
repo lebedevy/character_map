@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import logo from './logo.svg';
 import './App.css';
@@ -8,6 +8,8 @@ import Character from './components/Character';
 import Events from './components/Events';
 import Event from './components/Event';
 import { CharacterData, EventData, EventDate } from './data/data';
+import { connect } from 'react-redux';
+import { setCharacters } from './redux/actions';
 
 const useStyles = makeStyles({
     container: {
@@ -68,10 +70,14 @@ const events = [
     new EventData(8, new EventDate(1880), 'Alios divorces Anna', [3, 4]),
 ];
 
-function App() {
+function App({ setCharacters }) {
     const classes = useStyles();
     const [periods, setPeriods] = useState([0]);
     const [view, setView] = useState('Events');
+
+    useEffect(() => {
+        setCharacters(characters);
+    }, []);
 
     function addPeriod() {
         const per = periods.slice();
@@ -101,7 +107,7 @@ function App() {
     );
 }
 
-export default App;
+export default connect(null, { setCharacters })(App);
 
 const viewUseStyles = makeStyles({
     viewType: {
