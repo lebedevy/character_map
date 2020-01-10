@@ -6,6 +6,7 @@ import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 
 const useStyles = makeStyles({
     character: {
+        position: 'relative',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -23,10 +24,18 @@ const useStyles = makeStyles({
         '&:hover:after': {
             content: '"Details"',
             fontWeight: 'bold',
+            color: 'black',
+            background: 'white',
             fontSize: '1.1em',
+            position: 'absolute',
+            zIndex: 2,
+            padding: '10px',
         },
         '& svg': {
             color: 'white',
+        },
+        '& label': {
+            zIndex: 1,
         },
     },
     details: {
@@ -39,19 +48,28 @@ const useStyles = makeStyles({
             margin: 0,
         },
     },
+    img: {
+        index: 0,
+        // position: 'absolute',
+        position: 'absolute',
+        top: 0,
+    },
 });
 
 export default function Character({ character }) {
     const classes = useStyles();
-    const [details, setDetails] = useState(true);
+    const [details, setDetails] = useState(false);
     return (
         <React.Fragment>
             <div className={classes.character} onClick={e => setDetails(!details, e.target)}>
                 {character.img ? (
-                    <img src={character.img} />
+                    <img className={classes.img} src={character.img} alt="Profile" />
                 ) : (
                     <PermIdentityIcon fontSize="large" />
                 )}
+                <label>{`${character.first} ${character.middle ? character.middle : ''} ${
+                    character.last
+                }`}</label>
             </div>
             {details ? <CharacterDetails character={character} /> : null}
         </React.Fragment>

@@ -36,6 +36,9 @@ const characters = [
     new CharacterData(3, 'Alios', null, 'Schichlgruber', '/images/Alois_Hitler.jpg'),
     new CharacterData(4, 'Anna', null, 'Glasl'),
     new CharacterData(5, 'Franziska', null, 'Matzelsberges'),
+    new CharacterData(6, 'Alios', null, 'Hitler'),
+    new CharacterData(7, 'Angela', null, 'Hitler'),
+    new CharacterData(8, 'Klara', null, 'Polzl'),
 ];
 
 const events = [
@@ -66,8 +69,28 @@ const events = [
     ),
     new EventData(5, new EventDate(1873), 'Alios marries Anna Glasl, his first marriage', [3, 4]),
     new EventData(6, new EventDate(1883), 'Alios marries Franziska Matzelsberges', [3, 5]),
-    new EventData(7, new EventDate(1882), 'Anna dies', [3]),
+    new EventData(7, new EventDate(1882), 'Anna dies', [4]),
     new EventData(8, new EventDate(1880), 'Alios divorces Anna', [3, 4]),
+    new EventData(9, new EventDate(1881), 'Fanni births son Alios to Alios, out of wedlock', [
+        5,
+        6,
+    ]),
+    new EventData(10, new EventDate(1883), 'Fanni births daughter Angela', [5, 7]),
+    new EventData(11, new EventDate(1883), 'Fanni catches TB', [5]),
+    new EventData(12, new EventDate(1883), 'Alios begins affair with Klara Polzl', [3, 8]),
+    new EventData(13, new EventDate(1884), 'Fanni dies', [5]),
+    new EventData(
+        14,
+        new EventDate(1884),
+        'Alios pettitions to marry Klara (pettion required due to their close familial relations, which caused the priest to refuse to marry them)',
+        [3, 8]
+    ),
+    new EventData(
+        15,
+        new EventDate(1885),
+        "Alios's marriage pettition is approved by the bishop, and they marry",
+        [3, 8]
+    ),
 ];
 
 function App({ setCharacters }) {
@@ -112,6 +135,17 @@ export default connect(null, { setCharacters })(App);
 const viewUseStyles = makeStyles({
     viewType: {
         margin: '10px',
+        '& button': {
+            color: 'gray',
+            border: 'none',
+            background: 'none',
+            padding: '5px',
+            margin: '0 5px',
+            display: 'inline-block',
+            // '&:hover': {
+            //     background: '#00000090',
+            // },
+        },
         '& label': {
             color: '#ffffff',
             padding: '5px',
@@ -129,8 +163,12 @@ function ViewType({ setView }) {
     return (
         <div className={classes.viewType}>
             <label onClick={() => setView('Characters')}>Characters</label>
-            <label onClick={() => setView('Relationships')}>Relationships</label>
-            <label onClick={() => setView('Groups')}>Groups</label>
+            <button disabled onClick={() => setView('Relationships')}>
+                Relationships
+            </button>
+            <button disabled onClick={() => setView('Groups')}>
+                Groups
+            </button>
             <label onClick={() => setView('Events')}>Events</label>
         </div>
     );
