@@ -82,16 +82,7 @@ function CharacterSearch({ characters, returnChar }) {
     }
 
     return (
-        <div
-            className={classes.container}
-            onBlur={() => {
-                console.log('blur');
-                setFocused(false);
-            }}
-            onFocusCapture={() => console.log('focus caputre')}
-            onFocusIn={() => console.log('Here')}
-            onFocusOut={() => console.log('out')}
-        >
+        <div className={classes.container} onBlur={() => setFocused(false)}>
             <label>Filter for character</label>
             <input onChange={update} value={input} onFocus={() => setFocused(true)} />
             {focused || mouse ? (
@@ -127,7 +118,6 @@ function CharacterSearch({ characters, returnChar }) {
 }
 
 const mapStateToProps = state => {
-    console.log(state.characters);
     const { characters } = state.characters;
     return { characters };
 };

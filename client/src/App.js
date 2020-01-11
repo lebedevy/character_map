@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import logo from './logo.svg';
 import './App.css';
 import Period from './components/Period';
-import AddButton from './components/AddButton';
 import Character from './components/Character';
 import Events from './components/Events';
-import Event from './components/Event';
 import { CharacterData, EventData, EventDate } from './data/data';
 import { connect } from 'react-redux';
-import { setCharacters } from './redux/actions';
+import { setCharacters, setEvents } from './redux/actions';
 
 const useStyles = makeStyles({
     container: {
@@ -93,13 +90,14 @@ const events = [
     ),
 ];
 
-function App({ setCharacters }) {
+function App({ setCharacters, setEvents }) {
     const classes = useStyles();
     const [periods, setPeriods] = useState([0]);
     const [view, setView] = useState('Events');
 
     useEffect(() => {
         setCharacters(characters);
+        setEvents(events);
     }, []);
 
     function addPeriod() {
@@ -121,7 +119,7 @@ function App({ setCharacters }) {
                     ))}
                 </Period>
             ) : null}
-            {view === 'Events' ? <Events events={events} /> : null}
+            {view === 'Events' ? <Events /> : null}
             {periods.map(el => (
                 <Period />
             ))}
@@ -130,7 +128,7 @@ function App({ setCharacters }) {
     );
 }
 
-export default connect(null, { setCharacters })(App);
+export default connect(null, { setCharacters, setEvents })(App);
 
 const viewUseStyles = makeStyles({
     viewType: {

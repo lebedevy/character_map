@@ -25,12 +25,11 @@ function Events({ events, characters }) {
     const [eventsSorted, setEvents] = useState(null);
     const [filter, setFilter] = useState(null);
 
-    console.log(characters);
-    console.log(classes);
-
     useEffect(() => {
+        // A copy of the events is made for custom sorts
+        // refresh copy on events update
         setEvents(events.slice());
-    }, []);
+    }, [events]);
 
     useEffect(() => {
         if (sort === 'Date') {
@@ -82,9 +81,11 @@ function Events({ events, characters }) {
 }
 
 const mapStateToProps = state => {
-    console.log(state.characters);
+    console.log(state);
     const { characters } = state.characters;
-    return { characters };
+    const { events } = state.events;
+    console.log(events);
+    return { characters, events };
 };
 
 export default connect(mapStateToProps)(Events);
